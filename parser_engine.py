@@ -1,17 +1,19 @@
 def parse(start, target, cfg):
     from collections import deque
-
     queue = deque()
-    queue.append((start, [start]))
+    # queue.append((start, [start]))
+    queue.append((start, [start], []))
 
     visited = set()
 
     while queue:
 
-        current, path = queue.popleft()
+        current, path, history = queue.popleft()
+        # current, path = queue.popleft()
 
         if current == target:
-            return True, path
+            # return True, path
+            return True, path, history
 
         if len(current) > len(target) + 2:
             continue
@@ -30,6 +32,10 @@ def parse(start, target, cfg):
 
                     new_string = current[:i] + production + current[i+1:]
 
-                    queue.append((new_string, path + [new_string]))
+                    new_history = history + [(symbol, production, i)]
 
-    return False, []
+                    queue.append((new_string, path + [new_string], new_history))
+                    # queue.append((new_string, path + [new_string]))
+
+    # return False, []
+    return False, [], []

@@ -1,5 +1,6 @@
 from cfg_input import read_cfg, print_cfg
 from parser_engine import parse
+from parse_tree import build_parse_tree, draw_parse_tree
 
 def main():
 
@@ -19,14 +20,21 @@ def main():
             break
 
         # 4. parsing
-        result, path = parse("S", string, cfg)
-
+        # result, path = parse("S", string, cfg)
+        result, path, history = parse("S", string, cfg)
+        
         # 5. output
         if result:
             print("\n✔ STRING IS VALID")
 
             print("\n📌 LEFTMOST DERIVATION:")
             print(" → ".join(path))
+            
+            # build parse tree
+            tree_root = build_parse_tree(history)
+
+            # draw parse tree
+            draw_parse_tree(tree_root)
         else:
             print("\n❌ STRING IS INVALID")
 
